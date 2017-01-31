@@ -1,7 +1,6 @@
 package baserecyclerview.test.com.commonrecyclerview.widgets;
 
 import android.animation.Animator;
-import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -9,11 +8,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.TextView;
 
 /**
  * Created by T32E on 17/1/29.
@@ -91,18 +90,21 @@ public class CustormView extends View {
         canvas.drawLines(new float[]{-50.0f, mHeight / 2 * 0.8f - 50, 0, mHeight / 2 * 0.8f}, mPaint);
         canvas.drawLines(new float[]{-mWidth / 2 * 0.8f, 0, mWidth / 2 * 0.8f, 0, 0, -mHeight / 2 * 0.8f, 0, mHeight / 2 * 0.8f}, mPaint);
        // drawCircle(canvas);
-
+        doubanAnimator(canvas,mPaint);
+       // drawAngle(canvas);
+       // drawRect(canvas);
+       // drawRectList(canvas);
+      //  drawCircleList(canvas);
     }
 
-    private void drawCircleForAnimator(Canvas canvas){
-        RectF rectF = new RectF(-radius,-radius,radius,radius);
-        canvas.drawArc(rectF,-90,90,false,mPaint);
-
-    }
 
     public void showLoading(){
         initAnimator(animatorDuration);
         invalidate();
+    }
+
+    public float getAnimatorValue(){
+        return animatedValue;
     }
 
     public void stopLoading(){
@@ -141,8 +143,54 @@ public class CustormView extends View {
         RectF rectF = new RectF(-radius,-radius,radius,radius);
         canvas.drawArc(rectF,0,-180,false,mPaint);
         canvas.drawArc(rectF,-180,180,false,mPaint);
+        canvas.save();
+
     }
 
+    //画夹角
+    private void drawAngle(Canvas canvas){
+        mPaint.setColor(Color.RED);
+        canvas.drawLine(0,0,200f,0,mPaint);
+        //先移动画布 然后画线
+        canvas.rotate(45);
+        mPaint.setColor(Color.GREEN);
+       // canvas.drawColor(Color.BLUE);
+        ///画布是一层一层覆盖上去的
+        canvas.drawLine(0,0,200f,0,mPaint);
+    }
+
+    private void drawRect(Canvas canvas){
+        RectF rectF = new RectF(0,-400,400,0);
+        canvas.scale(-0.5f,-0.5f,200,0);
+        mPaint.setColor(Color.BLUE);
+        canvas.drawRect(rectF,mPaint);
+    }
+
+    private void drawRectList(Canvas canvas){
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setColor(Color.BLUE);
+        RectF rectF = new RectF(-400,-400,400,400);
+
+        for(int i= 0 ; i < 20 ;i++){
+            canvas.rotate(45);
+            canvas.scale((float) Math.sqrt(2)/2,(float)Math.sqrt(2)/2);
+            canvas.drawRect(rectF,mPaint);
+        }
+    }
+
+    private void drawCircleList(Canvas canvas){
+        mPaint.setStyle(Paint.Style.STROKE);
+        canvas.drawCircle(0,0,400,mPaint);
+        canvas.drawCircle(0,0,380,mPaint);
+        mPaint.setColor(Color.RED);
+        mPaint.setStyle(Paint.Style.STROKE);
+
+        for(int i= 0 ; i < 12;i++){
+            canvas.drawLine(0,380,0,400,mPaint);
+            canvas.rotate(30);
+        }
+
+    }
 
     private void doubanAnimator(Canvas canvas, Paint mPaint){
         mPaint.setStyle(Paint.Style.STROKE);//描边
@@ -153,12 +201,10 @@ public class CustormView extends View {
         float r = point*(float) Math.sqrt(2);
         RectF rectF = new RectF(-r,-r,r,r);
         canvas.save();
-
-        // rotate
-        if (animatedValue>=135){
+        if(animatedValue >= 135) {
+            Log.d(TAG,"when animatedvalue > = 135--"+animatedValue);
             canvas.rotate(animatedValue-135);
         }
-
         // draw mouth
         float startAngle=0, sweepAngle=0;
         if (animatedValue<135){
@@ -179,10 +225,10 @@ public class CustormView extends View {
         }
         canvas.drawArc(rectF,startAngle,sweepAngle,false,mPaint);
 
-        // draw eye
+//        // draw eye
         canvas.drawPoints(new float[]{
-                -point,-point
-                ,point,-point
+                point,point
+                ,-point,point
         },mPaint);
         canvas.restore();
     }

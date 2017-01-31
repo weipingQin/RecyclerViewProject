@@ -13,4 +13,8 @@
         <item name="attr5">attr5 from base_chart_res</item>
     </style>
 
+    <style name="MyAppTheme" parent="AppTheme">
+        <item name="android:listDivider">@drawable/divider_bg</item>
+    </style>
+
 </resources>

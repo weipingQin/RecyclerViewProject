@@ -9,4 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </baserecyclerview.test.com.commonrecyclerview.widgets.CustormView>
+
+    <TextView
+        android:id="@+id/tv_rotate_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ssssssssss"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"/>
 </LinearLayout>
