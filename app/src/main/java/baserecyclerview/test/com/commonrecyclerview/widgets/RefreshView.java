@@ -20,7 +20,7 @@ import android.view.animation.DecelerateInterpolator;
 
 public class RefreshView extends View {
 
-    public static final String TAG = "CustormView";
+    public static final String TAG = "RefreshView";
 
     private Paint mPaint = new Paint();
 
@@ -140,24 +140,24 @@ public class RefreshView extends View {
             canvas.rotate(animatedValue - 135);
         }
         // draw mouth
-        float startAngle = 0, sweepAngle = 0;
-        if (animatedValue < 135) {
-            startAngle = animatedValue + 5;
-            sweepAngle = 170 + animatedValue / 3;
-        } else if (animatedValue < 270) {
-            startAngle = 135 + 5;
-            sweepAngle = 170 + animatedValue / 3;
-        } else if (animatedValue < 630) {
-            startAngle = 135 + 5;
-            sweepAngle = 260 - (animatedValue - 270) / 5;
-        } else if (animatedValue < 720) {
-            startAngle = 135 - (animatedValue - 630) / 2 + 5;
-            sweepAngle = 260 - (animatedValue - 270) / 5;
-        } else {
-            startAngle = 135 - (animatedValue - 630) / 2 - (animatedValue - 720) / 6 + 5;
+        float startAngle=0, sweepAngle=0;
+        if (animatedValue<135){
+            startAngle = animatedValue +5;
+            sweepAngle = 170+animatedValue/3;
+        }else if (animatedValue<270){
+            startAngle = 135+5;
+            sweepAngle = 170+animatedValue/3;
+        }else if (animatedValue<630){
+            startAngle = 135+5;
+            sweepAngle = 260-(animatedValue-270)/5;
+        }else if (animatedValue<720){
+            startAngle = 135-(animatedValue-630)/2+5;
+            sweepAngle = 260-(animatedValue-270)/5;
+        }else{
+            startAngle = 135-(animatedValue-630)/2-(animatedValue-720)/6+5;
             sweepAngle = 170;
         }
-        canvas.drawArc(rectF, startAngle, sweepAngle, false, mPaint);
+        canvas.drawArc(rectF,startAngle,sweepAngle,false,mPaint);
 //        // draw eye
         canvas.drawPoints(new float[]{
                 point, point
